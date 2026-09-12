@@ -18,12 +18,6 @@ public class Main {
                 Priority.HIGH
         );
 
-        Objective javaObjective = new Objective(
-                "Java Development",
-                "Review Java concepts and continue backend development.",
-                Priority.HIGH
-        );
-
         Task lambdaTask = new Task(
                 "Review Lambda Expressions",
                 "Review lambda expressions and solve practical exercises.",
@@ -45,11 +39,9 @@ public class Main {
                 LocalDate.of(2026, 9, 4)
         );
 
-        javaObjective.addTask(lambdaTask);
-        javaObjective.addTask(gitTask);
-        javaObjective.addTask(projectTask);
-
-        javaGoal.addObjective(javaObjective);
+        javaGoal.addTask(lambdaTask);
+        javaGoal.addTask(gitTask);
+        javaGoal.addTask(projectTask);
 
         WeeklyPlan weeklyPlan =
                 new WeeklyPlan(LocalDate.of(2026, 9, 1));
@@ -84,7 +76,8 @@ public class Main {
                 )
         );
 
-        ProgressAnalyzer analyzer = new ProgressAnalyzer();
+        ProgressAnalyzer analyzer =
+                new ProgressAnalyzer();
 
         System.out.println("GOAL");
         System.out.println(javaGoal.getName());
@@ -94,27 +87,16 @@ public class Main {
                 javaGoal.getProgressPercentage()
         );
 
-        System.out.printf(
-                "Expected progress: %.1f%%%n",
-                analyzer.calculateExpectedGoalProgress(
-                        javaGoal,
-                        LocalDate.of(2026, 9, 4)
-                )
-        );
-
-        System.out.println(
-                analyzer.analyzeGoalPace(
-                        javaGoal,
-                        LocalDate.of(2026, 9, 4)
-                )
-        );
-
         System.out.println();
 
         WeeklyReport weeklyReport =
-                new WeeklyReport(weeklyPlan, analyzer);
+                new WeeklyReport(
+                        weeklyPlan,
+                        analyzer
+                );
 
-        String report = weeklyReport.generate();
+        String report =
+                weeklyReport.generate();
 
         System.out.println(report);
 

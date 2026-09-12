@@ -12,7 +12,7 @@ public class Goal {
     private LocalDate deadline;
     private int weeklyTargetMinutes;
     private Priority priority;
-    private List<Objective> objectives;
+    private List<Task> tasks;
 
     public Goal(
             String name,
@@ -36,30 +36,18 @@ public class Goal {
         this.deadline = deadline;
         this.weeklyTargetMinutes = weeklyTargetMinutes;
         this.priority = priority;
-        this.objectives = new ArrayList<>();
+        this.tasks = new ArrayList<>();
     }
 
-    public void addObjective(Objective objective) {
-        objectives.add(objective);
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 
-    public void removeObjective(Objective objective) {
-        objectives.remove(objective);
-    }
-
-    public List<Task> getAllTasks() {
-        List<Task> allTasks = new ArrayList<>();
-
-        for (Objective objective : objectives) {
-            allTasks.addAll(objective.getTasks());
-        }
-
-        return allTasks;
+    public void removeTask(Task task) {
+        tasks.remove(task);
     }
 
     public double getProgressPercentage() {
-        List<Task> tasks = getAllTasks();
-
         if (tasks.isEmpty()) {
             return 0;
         }
@@ -99,7 +87,7 @@ public class Goal {
         return priority;
     }
 
-    public List<Objective> getObjectives() {
-        return new ArrayList<>(objectives);
+    public List<Task> getTasks() {
+        return new ArrayList<>(tasks);
     }
 }
