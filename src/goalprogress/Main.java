@@ -43,13 +43,6 @@ public class Main {
         javaGoal.addTask(gitTask);
         javaGoal.addTask(projectTask);
 
-        WeeklyPlan weeklyPlan =
-                new WeeklyPlan(LocalDate.of(2026, 9, 1));
-
-        weeklyPlan.addTask(lambdaTask);
-        weeklyPlan.addTask(gitTask);
-        weeklyPlan.addTask(projectTask);
-
         lambdaTask.addStudySession(
                 new StudySession(
                         LocalDate.of(2026, 9, 2),
@@ -76,36 +69,29 @@ public class Main {
                 )
         );
 
-        ProgressAnalyzer analyzer =
-                new ProgressAnalyzer();
-
-        System.out.println("GOAL");
-        System.out.println(javaGoal.getName());
-
-        System.out.printf(
-                "Current progress: %.1f%%%n",
-                javaGoal.getProgressPercentage()
-        );
-
-        System.out.println();
-
-        WeeklyReport weeklyReport =
-                new WeeklyReport(
-                        weeklyPlan,
-                        analyzer
-                );
+        ProgressAnalyzer analyzer = new ProgressAnalyzer();
 
         String report =
-                weeklyReport.generate();
+                "GOAL PROGRESS REPORT\n"
+                        + "====================\n\n"
+                        + "Goal: " + javaGoal.getName() + "\n"
+                        + "Priority: " + javaGoal.getPriority() + "\n"
+                        + "Deadline: " + javaGoal.getDeadline() + "\n"
+                        + String.format(
+                        "Progress: %.1f%%\n",
+                        javaGoal.getProgressPercentage()
+                )
+                        + "Analysis: "
+                        + analyzer.generateSuggestion(javaGoal)
+                        + "\n";
 
         System.out.println(report);
 
-        ReportFileManager fileManager =
-                new ReportFileManager();
+        ReportFileManager fileManager = new ReportFileManager();
 
         fileManager.save(
                 report,
-                "weekly-report-2026-09-01.txt"
+                "goal-progress-report.txt"
         );
     }
 }

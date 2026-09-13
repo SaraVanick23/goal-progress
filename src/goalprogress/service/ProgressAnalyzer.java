@@ -1,45 +1,25 @@
 package goalprogress.service;
 
-import goalprogress.model.WeeklyPlan;
+import goalprogress.model.Goal;
 
 public class ProgressAnalyzer {
 
-    public double calculateWeeklyTaskCompletion(WeeklyPlan weeklyPlan) {
-        int totalTasks = weeklyPlan.getTasks().size();
+    public String generateSuggestion(Goal goal) {
 
-        if (totalTasks == 0) {
-            return 0;
+        double progress = goal.getProgressPercentage();
+
+        if (goal.getTasks().isEmpty()) {
+            return "No tasks have been added to this goal.";
         }
 
-        return weeklyPlan.getCompletedTaskCount() * 100.0 / totalTasks;
-    }
-
-    public double calculatePlannedVsActualTime(WeeklyPlan weeklyPlan) {
-        int plannedMinutes = weeklyPlan.getTotalEstimatedMinutes();
-
-        if (plannedMinutes == 0) {
-            return 0;
+        if (progress >= 80) {
+            return "The goal is progressing well.";
         }
 
-        return weeklyPlan.getActualMinutes() * 100.0 / plannedMinutes;
-    }
-
-    public String generateWeeklySuggestion(WeeklyPlan weeklyPlan) {
-        double taskCompletion =
-                calculateWeeklyTaskCompletion(weeklyPlan);
-
-        if (weeklyPlan.getTasks().isEmpty()) {
-            return "No tasks were planned for this week.";
+        if (progress >= 50) {
+            return "Good progress. Keep working on the remaining tasks.";
         }
 
-        if (taskCompletion >= 80) {
-            return "Your weekly plan is progressing well.";
-        }
-
-        if (taskCompletion >= 50) {
-            return "Part of the weekly plan was completed. Review the remaining tasks before planning the next week.";
-        }
-
-        return "The completed workload was below the weekly plan. Consider reviewing your available time.";
+        return "The goal still has several tasks to complete.";
     }
 }
